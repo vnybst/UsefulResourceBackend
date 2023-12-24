@@ -36,7 +36,7 @@ jobs:
       #   run: deno fmt --check
 
       - name: Run linter
-      - run: deno lint --ignore=src/utils/logger.ts  # Add this line to ignore logger.ts
+      - run: deno lint --ignore=/home/runner/work/UsefulResourceBackend/UsefulResourceBackend/src/utils/logger.ts  # Add this line to ignore logger.ts
 
 
       - name: Run tests
