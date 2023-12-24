@@ -36,10 +36,12 @@ class CategoryDetails extends Model implements CategoryDetailsAttributes {
         createdAt: {
           type: DataTypes.DATE,
           allowNull: false,
+          defaultValue: DataTypes.NOW, // Add your specific default value here
         },
         updatedAt: {
           type: DataTypes.DATE,
           allowNull: false,
+          defaultValue: DataTypes.NOW, // Add your specific default value here
         },
       },
       {

@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { db } from "../database/models";
+import { createTokenForNewUser } from "../auth/authServer";
 
 export async function getUserById(req: Request, res: Response) {
   const { id } = req.params;
@@ -21,10 +22,27 @@ export function deleteUser() {
 export async function createUser(req: Request, res: Response) {
   const { email, name } = req.body;
   const user = { user: email, name };
-  const isUserPresent = await db.UserDetails.findOne({ where: { email } });
+  const isUserPresent = await db.UserDetails.findOne({
+    where: { email },
+    attributes: ["id", "name", "email", "accessToken", "refreshToken"],
+  });
   if (!isUserPresent) {
-    await db.UserDetails.create({ email, name });
-    return res.status(201).send(user);
+    const createdUser = await db.UserDetails.create({ email, name });
+    console.log(createdUser.getDataValue("id"));
+    const { accessToken, refreshToken } = await createTokenForNewUser(email);
+    await db.UserDetails.update(
+      { accessToken, refreshToken },
+      { where: { email } }
+    );
+    return res
+      .status(201)
+      .send({
+        ...user,
+        id: createdUser.getDataValue("id"),
+        accessToken,
+        refreshToken,
+      });
   }
-  return res.status(400).json({ message: "User already exists !" });
+
+  return res.status(400).json(isUserPresent);
 }

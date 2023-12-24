@@ -77,3 +77,11 @@ export async function validateToken(
     return res.status(403).json({ message: error });
   }
 }
+
+export async function createTokenForNewUser(email: string) {
+  const accessToken = generateAccessToken({ user: email });
+  const refreshToken = generateRefreshToken({ user: email });
+  refreshTokens.push(refreshToken);
+
+  return { accessToken, refreshToken };
+}
