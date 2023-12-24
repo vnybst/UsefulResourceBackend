@@ -5,6 +5,7 @@ import SequelizeConnection from "./database/connection";
 import { db } from "./database/models";
 import userRouter from "./routes/user";
 import authRouter from "./routes/authServer";
+import categoryRouter from "./routes/category";
 
 const logger = new Logger("main");
 
@@ -23,7 +24,8 @@ async function main() {
     )
     .use("/v1/auth", authRouter())
     .use("/v1/user", userRouter())
-    .get("/health", async (req: Request, res: Response) => {
+    .use("/v1/category", categoryRouter())
+    .get("/health", (_req: Request, res: Response) => {
       return res.send("Hello World!");
     });
 
