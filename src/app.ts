@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 import config from "./config";
 import Logger from "./utils/logger";
 import SequelizeConnection from "./database/connection";
-// import { db } from "./database/models";
+import { db } from "./database/models";
 import userRouter from "./routes/user";
 import authRouter from "./routes/authServer";
 
@@ -11,7 +11,7 @@ const logger = new Logger("main");
 async function main() {
   // Connection the database
   await SequelizeConnection.connect();
-  // db.sequelize.sync({ force: true });
+  db.sequelize.sync();
   const app = express()
     .disable("x-powered-by")
     .enable("trust proxy")
