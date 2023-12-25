@@ -34,15 +34,13 @@ export async function createUser(req: Request, res: Response) {
       { accessToken, refreshToken },
       { where: { email } }
     );
-    return res
-      .status(201)
-      .send({
-        ...user,
-        id: createdUser.getDataValue("id"),
-        accessToken,
-        refreshToken,
-      });
+    return res.status(201).send({
+      ...user,
+      id: createdUser.getDataValue("id"),
+      accessToken,
+      refreshToken,
+    });
   }
 
-  return res.status(400).json(isUserPresent);
+  return res.status(200).json(isUserPresent);
 }
