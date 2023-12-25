@@ -13,7 +13,7 @@ export default {
   port: parseInt(ENV.PORT || "3000", 10),
   authSecretKey: must("ACCESS_TOKEN_SECRET"),
   refreshSecretKey: must("REFRESH_TOKEN_SECRET"),
-  dbName: "useful_resource",
+  dbName: must("DB_NAME"),
   dbPort: must("DB_PORT"),
   dbHost: must("DB_HOST"),
   dbUserName: must("DB_USER"),
