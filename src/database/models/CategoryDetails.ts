@@ -47,7 +47,7 @@ class CategoryDetails extends Model implements CategoryDetailsAttributes {
       {
         sequelize,
         underscored: true,
-        tableName: "categoryDetails",
+        tableName: "category_details",
       }
     );
 

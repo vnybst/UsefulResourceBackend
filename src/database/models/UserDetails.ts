@@ -1,5 +1,6 @@
 import { Model, Sequelize, DataTypes } from "sequelize";
 import { UserDetails as UserDetailsAttributes } from "../attributes";
+import PostDetails from "./PostDetails";
 
 export type UserDetailsCreationArrtibutes = UserDetailsAttributes;
 
@@ -49,18 +50,17 @@ class UserDetails extends Model implements UserDetailsAttributes {
       {
         sequelize,
         underscored: true,
-        tableName: "userDetails",
+        tableName: "user_details",
       }
     );
   }
 
-  //   static associateModel(): void {
-  // UserDetails.belongsTo(Organization, {
-  //   targetKey: "id",
-  //   as: "organization",
-  // });
-  // UserDetails.belongsTo(Department, { targetKey: "id", as: "department" });
-  //   }
+  static associate(models: { PostDetails: typeof PostDetails }): void {
+    UserDetails.hasMany(models.PostDetails, {
+      foreignKey: "user_id",
+      onDelete: "CASCADE",
+    });
+  }
 }
 
 export default UserDetails;
